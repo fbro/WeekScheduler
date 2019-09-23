@@ -1,0 +1,29 @@
+﻿TODO:
+
+what to do what to do?
+
+optimizations?
+	better algorithm? - create objects that binds together logical parts - fx activity and tag
+	less computation when viewing data - week lists, especially in work time view!
+
+less context lookups?
+	remove _context from repository code to enable unit testing
+
+create unit tests
+
+create integration tests
+	get connection to the same DB
+
+create a week view like the "vagtplan"
+	colors DONE
+	TODO:
+	add partial view
+	add table grid
+	populate with data from employee week slot activity ect. all that _week uses....
+	add color to grid - format - beautify the grid to match "vagtplan"
+
+add tagging, create a list of tags instead of naming stuff correctly
+	tags should be asociated with Activities and nothing else
+	TODO: add to algorithm
+
+bugs:
