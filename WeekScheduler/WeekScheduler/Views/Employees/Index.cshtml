@@ -1,0 +1,92 @@
+﻿@model WeekScheduler.ViewModels.IndexEmployeeViewModel
+
+@{
+    ViewData["Title"] = "Employee Index";
+}
+
+<h2>Employee Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form asp-controller="Employees" asp-action="Index" method="get">
+    <p>
+        <input type="hidden" asp-for="@Model.SortLayout" />
+        <input type="text" value="@Model.FilterString" name="filterString" placeholder="Search">
+        <input type="submit" value="Filter" />
+        @if (Model.SortLayout != null && Model.SortLayout != "" || Model.FilterString != null && Model.FilterString != "")
+        {@Html.ActionLink("Reset Search", "Index");
+    }
+    </p>
+</form>
+
+<a asp-area="" asp-controller="EmployeeProjects" asp-action="">EmployeeProjects</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            @{
+                var sortLayoutEmployeeID = "EmployeeID_asc";
+                var sortLayoutName = "Name_asc";
+                var sortLayoutWeeklyWorkHours = "WeeklyWorkHours_asc";
+                var sortLayoutNumOfWeeklyCounseling = "NumOfWeeklyCounseling_asc";
+                var sortLayoutColor = "Color_asc";
+
+                if (Model.SortLayout != null)
+                {
+                    if (Model.SortLayout.Equals("EmployeeID_asc")) { sortLayoutEmployeeID = "Name_desc"; }
+                    else if (Model.SortLayout.Equals("Name_asc")) { sortLayoutName = "Name_desc"; }
+                    else if (Model.SortLayout.Equals("WeeklyWorkHours_asc")) { sortLayoutWeeklyWorkHours = "WeeklyWorkHours_desc"; }
+                    else if (Model.SortLayout.Equals("NumOfWeeklyCounseling_asc")) { sortLayoutNumOfWeeklyCounseling = "NumOfWeeklyCounseling_desc"; }
+                    else if (Model.SortLayout.Equals("Color_asc")) { sortLayoutColor = "Color_desc"; }
+                }
+            }
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.EmployeeModels[0].EmployeeID), "Index", new { sortLayout = sortLayoutEmployeeID, filterString = Model.FilterString })
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.EmployeeModels[0].Name), "Index", new { sortLayout = sortLayoutName, filterString = Model.FilterString })
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.EmployeeModels[0].WeeklyWorkHours), "Index", new { sortLayout = sortLayoutWeeklyWorkHours, filterString = Model.FilterString })
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.EmployeeModels[0].NumOfWeeklyCounseling), "Index", new { sortLayout = sortLayoutNumOfWeeklyCounseling, filterString = Model.FilterString })
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.EmployeeModels[0].Color), "Index", new { sortLayout = sortLayoutColor, filterString = Model.FilterString })
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.EmployeeModels) {
+        <tr style="color:#@item.Color">
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WeeklyWorkHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumOfWeeklyCounseling)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-EmployeeID="@item.EmployeeID">Edit</a> |
+                <a asp-action="Details" asp-route-EmployeeID="@item.EmployeeID">Details</a> |
+                <a asp-action="Delete" asp-route-EmployeeID="@item.EmployeeID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div>
+    <a href='javascript:history.go(-1)'>Return</a>
+</div>

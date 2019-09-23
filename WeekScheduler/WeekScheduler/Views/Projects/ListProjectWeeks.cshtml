@@ -1,0 +1,29 @@
+﻿@model WeekScheduler.ViewModels.ListProjectWeekViewModel
+
+@{
+    ViewData["Title"] = "ListProjectWeeks";
+}
+
+<h2>ListProjectWeeks</h2>
+
+<form asp-controller="Projects" asp-action="ListProjectWeeks" method="get">
+    <p>
+        <input type="hidden" asp-for="@Model.ProjectID" />
+        <input type="text" value="@Model.FromWeekID" name="FromWeekID" placeholder="From">
+        <input type="text" value="@Model.ToWeekID" name="ToWeekID" placeholder="To">
+        <input type="submit" value="Filter" />
+        @if (Model.FromWeekID != null && Model.ToWeekID != "")
+        {@Html.ActionLink("Reset Search", "ListProjectWeeks", "Projects", new { ProjectID = 1 });
+    }
+    </p>
+</form>
+
+@foreach (var item in Model.WeekViewModels)
+{
+    <br />
+    @await Html.PartialAsync("../Weeks/_Week", item)
+}
+    <br />
+    <div>
+        <a href='javascript:history.go(-1)'>Return</a>
+    </div>

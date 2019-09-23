@@ -1,0 +1,144 @@
+﻿@model WeekScheduler.ViewModels.DetailsSlotViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Slot</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProjectID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WeekID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WeekID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ActivityID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    @Html.ActionLink("Edit slot", "Edit", new { ProjectID = Model.ProjectID, WeekID = Model.WeekID, ActivityID = Model.ActivityID, EmployeeID = Model.EmployeeID }) |
+    <a asp-action="Index">Back to Slot List</a>
+</div>
+
+<div>
+    <h4>Activity</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DetailsActivityViewModel.ActivityID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DetailsActivityViewModel.ActivityID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DetailsActivityViewModel.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DetailsActivityViewModel.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DetailsActivityViewModel.DayOfWeek)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DetailsActivityViewModel.DayOfWeek)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DetailsActivityViewModel.TimeOfDay)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DetailsActivityViewModel.TimeOfDay)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DetailsActivityViewModel.Hours)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DetailsActivityViewModel.Hours)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DetailsActivityViewModel.Importance)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DetailsActivityViewModel.Importance)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DetailsActivityViewModel.Owner)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DetailsActivityViewModel.Owner)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DetailsActivityViewModel.Tags)
+        </dt>
+        <dd>
+            @foreach (var tag in Model.DetailsActivityViewModel.Tags)
+            {
+                <p class="btn btn-default btn-selected">@tag</p>
+            }
+        </dd>
+    </dl>
+</div>
+
+<div>
+    @Html.ActionLink("Edit activity", "Edit", "activities", new { ActivityID = Model.DetailsActivityViewModel.ActivityID }) |
+    @Html.ActionLink("Back to activity List", "Index", "activities")
+</div>
+
+<div>
+    <h4>ActivityRecord</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityRecordModel.EmployeeID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ActivityRecordModel.EmployeeID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityRecordModel.ActivityID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ActivityRecordModel.ActivityID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityRecordModel.Weight)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ActivityRecordModel.Weight)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit activityRecord", "Edit", "activityRecords", new { EmployeeID = Model.ActivityRecordModel?.EmployeeID, ActivityID = Model.ActivityRecordModel?.ActivityID }) |
+    @Html.ActionLink("Back to activityRecord List", "Index", "activityRecords")
+</div>
+<div>
+    <a href='javascript:history.go(-1)'>Return</a>
+</div>

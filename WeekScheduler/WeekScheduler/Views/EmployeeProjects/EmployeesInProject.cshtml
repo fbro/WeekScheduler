@@ -1,0 +1,47 @@
+﻿@model WeekScheduler.ViewModels.EmployeeProjectViewModel
+
+@{
+    ViewData["Title"] = "Employees In Project " + @Model.Project.Name;
+}
+
+<h2>Employees In Project @Model.Project.Name</h2>
+
+<p>
+    <a asp-action="Create" asp-route-ProjectID = "@Model.Project.ProjectID">Add employee to @Model.Project.Name</a>
+</p>
+
+<a asp-area="" asp-controller="Employees" asp-action="">See all employees</a>
+
+<div>
+    Project ID: @Model.Project.ProjectID
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeesInProject.FirstOrDefault().EmployeeID)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.EmployeesInProject)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeID)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { ProjectID = item.ProjectID, EmployeeID = item.EmployeeID }) |
+                    @Html.ActionLink("Details", "Details", new { ProjectID = item.ProjectID, EmployeeID = item.EmployeeID }) |
+                    @Html.ActionLink("Delete", "Delete", new { ProjectID = item.ProjectID, EmployeeID = item.EmployeeID })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a href='javascript:history.go(-1)'>Return</a>
+</div>

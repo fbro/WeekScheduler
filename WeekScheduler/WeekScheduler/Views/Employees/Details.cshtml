@@ -1,0 +1,88 @@
+﻿@model WeekScheduler.ViewModels.DetailsEmployeeViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Employee</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WeeklyWorkHours)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WeeklyWorkHours)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumOfWeeklyCounseling)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumOfWeeklyCounseling)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Color)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Color)
+        </dd>
+    </dl>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ActivityRecords.FirstOrDefault().EmployeeID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ActivityRecords.FirstOrDefault().ActivityID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ActivityRecords.FirstOrDefault().Weight)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ActivityRecords)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ActivityID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Weight)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+<div>
+    <a asp-action="Edit" asp-route-EmployeeID="@Model.EmployeeID">Edit</a>
+</div>
+
+<div>
+    <a href='javascript:history.go(-1)'>Return</a>
+</div>
+<div>
+    <a asp-action="Index">Back to list of employees</a>
+</div>

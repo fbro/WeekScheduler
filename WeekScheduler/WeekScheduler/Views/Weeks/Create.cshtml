@@ -1,0 +1,81 @@
+﻿@model WeekScheduler.ViewModels.CreateWeekViewModel
+
+@{
+            ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Week</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ProjectID" class="control-label"></label>
+                <input asp-for="ProjectID" class="form-control" />
+                <span asp-validation-for="ProjectID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WeekID" class="control-label"></label>
+                <input asp-for="WeekID" class="form-control" />
+                <span asp-validation-for="WeekID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WeekTemplateID" class="control-label"></label>
+                <input asp-for="WeekTemplateID" class="form-control" />
+                <span asp-validation-for="WeekTemplateID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes1Monday" class="control-label"></label>
+                <input asp-for="Notes1Monday" class="form-control" />
+                <span asp-validation-for="Notes1Monday" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes2Tuesday" class="control-label"></label>
+                <input asp-for="Notes2Tuesday" class="form-control" />
+                <span asp-validation-for="Notes2Tuesday" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes3Wednesday" class="control-label"></label>
+                <input asp-for="Notes3Wednesday" class="form-control" />
+                <span asp-validation-for="Notes3Wednesday" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes4Thursday" class="control-label"></label>
+                <input asp-for="Notes4Thursday" class="form-control" />
+                <span asp-validation-for="Notes4Thursday" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes5Friday" class="control-label"></label>
+                <input asp-for="Notes5Friday" class="form-control" />
+                <span asp-validation-for="Notes5Friday" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes6Saturday" class="control-label"></label>
+                <input asp-for="Notes6Saturday" class="form-control" />
+                <span asp-validation-for="Notes6Saturday" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes7Sunday" class="control-label"></label>
+                <input asp-for="Notes7Sunday" class="form-control" />
+                <span asp-validation-for="Notes7Sunday" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a href='javascript:history.go(-1)'>Return</a>
+</div>
+<div>
+    <a asp-action="Index">Back to list of weeks</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

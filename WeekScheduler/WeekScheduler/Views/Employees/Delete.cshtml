@@ -1,0 +1,57 @@
+﻿@model WeekScheduler.Models.EmployeeModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Employee</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WeeklyWorkHours)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WeeklyWorkHours)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumOfWeeklyCounseling)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumOfWeeklyCounseling)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Color)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Color)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EmployeeID" />
+        <input type="submit" value="Delete" class="btn btn-default" />
+    </form>
+
+    <div>
+        <a href='javascript:history.go(-1)'>Return</a>
+    </div>
+    <div>
+        <a asp-action="Index">Back to list of employees</a>
+    </div>
+</div>

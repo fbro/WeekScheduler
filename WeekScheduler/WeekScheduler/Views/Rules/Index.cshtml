@@ -1,0 +1,51 @@
+﻿@model IEnumerable<WeekScheduler.Models.RuleModel>
+
+@{
+    ViewData["Title"] = "Rule Index";
+}
+
+<h2>Rule Index</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RuleID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RuleStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RuleID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @if (item.RuleStatus)
+                    {
+                        @Html.ActionLink("ON", "ToggleRuleStatus", "Rules", new { RuleID = item.RuleID })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("OFF", "ToggleRuleStatus", "Rules", new { RuleID = item.RuleID })
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a href='javascript:history.go(-1)'>Return</a>
+</div>

@@ -1,0 +1,76 @@
+﻿@model WeekScheduler.ViewModels.DetailsActivityViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Activity</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ActivityID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DayOfWeek)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DayOfWeek)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeOfDay)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TimeOfDay)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Hours)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Hours)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Importance)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Importance)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Owner)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Tags)
+        </dt>
+        <dd>
+            @foreach (var tag in Model.Tags)
+            {
+                <p class="btn btn-default btn-selected">@tag</p>
+            }
+        </dd>
+    </dl>
+    
+</div>
+<div>
+    <a asp-action="Edit" asp-route-ActivityID="@Model.ActivityID">Edit</a>
+</div>
+
+<div>
+    <a href='javascript:history.go(-1)'>Return</a>
+</div>
+<div>
+    <a asp-action="Index">Back to list of activities</a>
+</div>

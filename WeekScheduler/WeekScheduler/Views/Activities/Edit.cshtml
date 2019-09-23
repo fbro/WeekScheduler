@@ -1,0 +1,84 @@
+﻿@model WeekScheduler.ViewModels.EditActivityViewModel
+@using static WeekScheduler.Models.TimeSlot
+@using static WeekScheduler.Models.DaySlot
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Activity</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ActivityID" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DayOfWeek" class="control-label"></label>
+                <select asp-for="DayOfWeek" asp-items="Html.GetEnumSelectList<DaySlot>()" class="form-control"></select>
+                <span asp-validation-for="DayOfWeek" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TimeOfDay" class="control-label"></label>
+                <select asp-for="TimeOfDay" asp-items="Html.GetEnumSelectList<TimeSlot>()" class="form-control"></select>
+                <span asp-validation-for="TimeOfDay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hours" class="control-label"></label>
+                <input asp-for="Hours" class="form-control" />
+                <span asp-validation-for="Hours" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Importance" class="control-label"></label>
+                <input asp-for="Importance" class="form-control" />
+                <span asp-validation-for="Importance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Owner" class="control-label"></label>
+                <input asp-for="Owner" class="form-control" />
+                <span asp-validation-for="Owner" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+
+        @foreach (var Tag in Model.Tags)
+        {
+            if (Tag.IsInActivity)
+            {
+                <form asp-controller="Tags" asp-action="Remove" method="post">
+                    <input type="submit" value="@Tag.TagName" class="btn btn-default btn-selected"/>
+                    <input type="hidden" name="TagID" value="@Tag.TagName" />
+                    <input type="hidden" name="ActivityID" value="@Model.ActivityID" />
+                </form>
+            }
+            else
+            {
+                <form asp-controller="Tags" asp-action="Add" method="post">
+                    <input type="submit" value="@Tag.TagName" class="btn btn-default btn-unselected"/>
+                    <input type="hidden" name="TagID" value="@Tag.TagName" />
+                    <input type="hidden" name="ActivityID" value="@Model.ActivityID" />
+                </form>
+            }
+        }
+    </div>
+</div>
+
+<div>
+    <a href='javascript:history.go(-1)'>Return</a>
+</div>
+<div>
+    <a asp-action="Index">Back to list of activities</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

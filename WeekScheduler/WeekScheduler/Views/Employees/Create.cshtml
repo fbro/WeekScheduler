@@ -1,0 +1,56 @@
+﻿@model WeekScheduler.Models.EmployeeModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Employee</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EmployeeID" class="control-label"></label>
+                <input asp-for="EmployeeID" class="form-control" />
+                <span asp-validation-for="EmployeeID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WeeklyWorkHours" class="control-label"></label>
+                <input asp-for="WeeklyWorkHours" class="form-control" />
+                <span asp-validation-for="WeeklyWorkHours" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumOfWeeklyCounseling" class="control-label"></label>
+                <input asp-for="NumOfWeeklyCounseling" class="form-control" />
+                <span asp-validation-for="NumOfWeeklyCounseling" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Color" class="control-label"></label>
+                <input asp-for="Color" class="jscolor form-control" id="jsc" />
+                <span asp-validation-for="Color" class="text-danger"></span>
+            </div>
+            <div class="btn-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a href='javascript:history.go(-1)'>Return</a>
+</div>
+<div>
+    <a asp-action="Index">Back to list of employees</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

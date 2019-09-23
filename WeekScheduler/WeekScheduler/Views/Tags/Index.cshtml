@@ -1,0 +1,69 @@
+﻿@model WeekScheduler.ViewModels.IndexTagViewModel
+
+@{
+    ViewData["Title"] = "Tag Index";
+}
+
+<h2>Tag Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form asp-controller="Tags" asp-action="Index" method="get">
+    <p>
+        <input type="hidden" asp-for="@Model.SortLayout" />
+        <input type="text" value="@Model.FilterString" name="filterString" placeholder="Search">
+        <input type="submit" value="Filter" />
+        @if (Model.SortLayout != null && Model.SortLayout != "" || Model.FilterString != null && Model.FilterString != "")
+        {@Html.ActionLink("Reset Search", "Index");
+    }
+    </p>
+</form>
+
+<a asp-area="" asp-controller="Activities" asp-action="">Activities</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            @{
+                var sortLayoutTagID = "TagID_asc";
+                var sortLayoutActivityID = "ActivityID_asc";
+
+                if (Model.SortLayout != null)
+                {
+                    if (Model.SortLayout.Equals("TagID_asc")) { sortLayoutTagID = "TagID_desc"; }
+                    else if (Model.SortLayout.Equals("ActivityID_asc")) { sortLayoutActivityID = "ActivityID_desc"; }
+                }
+            }
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.TagModels[0].TagID), "Index", new { sortLayout = sortLayoutTagID, filterString = Model.FilterString })
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.TagModels[0].ActivityID), "Index", new { sortLayout = sortLayoutActivityID, filterString = Model.FilterString })
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TagModels)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TagID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActivityID)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { TagID = item.TagID, ActivityID = item.ActivityID }) |
+                    @Html.ActionLink("Details", "Details", new { TagID = item.TagID, ActivityID = item.ActivityID }) |
+                    @Html.ActionLink("Delete", "Delete", new { TagID = item.TagID, ActivityID = item.ActivityID })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a href='javascript:history.go(-1)'>Return</a>
+</div>

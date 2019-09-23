@@ -1,0 +1,86 @@
+﻿@model WeekScheduler.ViewModels.DetailsWeekViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Week</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProjectID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WeekID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WeekID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstDayOfTheWeek)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstDayOfTheWeek)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes1Monday)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes1Monday)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes2Tuesday)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes2Tuesday)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes3Wednesday)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes3Wednesday)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes4Thursday)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes4Thursday)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes5Friday)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes5Friday)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes6Saturday)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes6Saturday)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes7Sunday)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes7Sunday)
+        </dd>
+    </dl>
+
+    @Html.Partial("/Views/Weeks/_Week.cshtml", Model)
+
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { ProjectID = Model.ProjectID, WeekID = Model.WeekID })
+</div>
+<div>
+    <a href='javascript:history.go(-1)'>Return</a>
+</div>
+<div>
+    <a asp-action="Index">Back to list of weeks</a>
+</div>

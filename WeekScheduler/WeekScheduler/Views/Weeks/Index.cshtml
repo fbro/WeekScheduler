@@ -1,0 +1,74 @@
+﻿@model WeekScheduler.ViewModels.IndexWeekViewModel
+
+@{
+    ViewData["Title"] = "Week Index";
+}
+
+<h2>Week Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form asp-controller="Weeks" asp-action="Index" method="get">
+    <p>
+        <input type="hidden" asp-for="@Model.SortLayout" />
+        <input type="text" value="@Model.FilterString" name="filterString" placeholder="Search">
+        <input type="submit" value="Filter" />
+        @if (Model.SortLayout != null && Model.SortLayout != "" || Model.FilterString != null && Model.FilterString != "")
+        { @Html.ActionLink("Reset Search", "Index"); }
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            @{
+                var sortLayoutProjectID = "ProjectID_asc";
+                var sortLayoutWeekID = "WeekID_asc";
+                var sortLayoutFirstDayOfTheWeek = "FirstDayOfTheWeek_asc";
+
+                if (Model.SortLayout != null)
+                {
+                    if (Model.SortLayout.Equals("ProjectID_asc")) { sortLayoutProjectID = "ProjectID_desc"; }
+                    else if (Model.SortLayout.Equals("WeekID_asc")) { sortLayoutWeekID = "WeekID_desc"; }
+                    else if (Model.SortLayout.Equals("FirstDayOfTheWeek_asc")) { sortLayoutFirstDayOfTheWeek = "FirstDayOfTheWeek_desc"; }
+                }
+            }
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.WeekModels[0].ProjectID), "Index", new { sortLayout = sortLayoutProjectID, filterString = Model.FilterString })
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.WeekModels[0].WeekID), "Index", new { sortLayout = sortLayoutWeekID, filterString = Model.FilterString })
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.WeekModels[0].FirstDayOfTheWeek), "Index", new { sortLayout = sortLayoutFirstDayOfTheWeek, filterString = Model.FilterString })
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.WeekModels)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WeekID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstDayOfTheWeek)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { ProjectID = item.ProjectID, WeekID = item.WeekID }) |
+                    @Html.ActionLink("Details", "Details", new { ProjectID = item.ProjectID, WeekID = item.WeekID }) |
+                    @Html.ActionLink("Delete", "Delete", new { ProjectID = item.ProjectID, WeekID = item.WeekID })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a href='javascript:history.go(-1)'>Return</a>
+</div>

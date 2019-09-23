@@ -1,0 +1,141 @@
+﻿@model WeekScheduler.ViewModels.DetailsWeekViewModel
+
+<table>
+    <tr>
+        <th>
+            @Html.ActionLink("Week " + Model.WeekID.Substring(0, 2), "Details", "Weeks", new { ProjectID = Model.ProjectID, WeekID = Model.WeekID })
+            &ensp;
+            <br />
+            @Model.FirstDayOfTheWeek.ToString("dd/MM/yyyy")
+            &ensp;
+        </th>
+        @foreach (var timeSlot in Enum.GetValues(typeof(WeekScheduler.Models.TimeSlot)))
+        {
+            bool timeSlotIsDisplayed = false;
+            @foreach (var type in Model.Types)
+            {
+                if (Model.SlotsJoinActivities.Where(e => e.Activity.TimeOfDay == (WeekScheduler.Models.TimeSlot)timeSlot && e.Activity.Name.ToLower().Contains(type)).Any())
+                {
+                    if (!timeSlotIsDisplayed)
+                    {
+                        timeSlotIsDisplayed = true;
+                        <th>
+                            @timeSlot.ToString().ToLower().Replace('_', ' ')
+                            &ensp;
+                            <br />
+                            @type
+                            &ensp;
+                        </th>
+                    }
+                    else
+                    {
+                        <th>
+                            <br />
+                            @type
+                            &ensp;
+                        </th>
+                    }
+                }
+            }
+        }
+    </tr>
+    @for (int i = 1; i < Enum.GetValues(typeof(WeekScheduler.Models.DaySlot)).Length + 1; i++) //  (var daySlot in Enum.GetValues(typeof(WeekScheduler.Models.DaySlot)))
+    {
+        int sel = 0; // this sel is used to force a correct ordering of weekdays - in the code a week starts with a sunday - monday in the view
+        if (i == 7)
+        {
+            sel = 0;
+        }
+        else if (i == 8)
+        {
+            sel = 7;
+        }
+        else
+        {
+            sel = i;
+        }
+        DaySlot daySlot = (WeekScheduler.Models.DaySlot)Enum.GetValues(typeof(WeekScheduler.Models.DaySlot)).GetValue(sel);
+
+        <tr>
+            <td>
+                @if (Model.SlotsJoinActivities.Where(e => e.Activity.DayOfWeek == daySlot).Any())
+                {
+                    @daySlot.ToString().ToLower()// only print the day label when there is an activity to be displayed
+                }
+            </td>
+            @foreach (var timeSlot in Enum.GetValues(typeof(WeekScheduler.Models.TimeSlot)))
+            {
+                @foreach (var type in Model.Types)
+                {
+                    var IDs = Model.SlotsJoinActivities.Where(e => e.Activity.DayOfWeek == daySlot && e.Activity.TimeOfDay == (WeekScheduler.Models.TimeSlot)timeSlot && e.Type == type).Select(e => e.Activity.ActivityID).Distinct().ToList();
+                    if (IDs.Count == 0 && Model.SlotsJoinActivities.Where(e => e.Activity.TimeOfDay == (WeekScheduler.Models.TimeSlot)timeSlot && e.Type == type).Any())
+                    {
+                        <td></td>}
+                    @foreach (var slotJoinActivity in IDs)
+                    {
+                        <td>
+                            @foreach (var SJA in Model.SlotsJoinActivities.Where(e => e.Activity.DayOfWeek == daySlot && e.Activity.TimeOfDay == (WeekScheduler.Models.TimeSlot)timeSlot && e.Type == type && e.Activity.ActivityID == slotJoinActivity).ToList())
+                            {
+                                if (SJA.Slot.EmployeeID.Equals("--"))
+                                {
+                                    <a>-</a>
+                                }
+                                else
+                                {
+                                    @Html.ActionLink(SJA.Slot.EmployeeID, "Details", "Slots", new { ProjectID = SJA.Slot.ProjectID, WeekID = SJA.Slot.WeekID, ActivityID = SJA.Activity.ActivityID, EmployeeID = SJA.Slot.EmployeeID }, new { @style = "color:#" + @Model.EmployeesWithWorkHourStats.Single(e => e.EmployeeID == SJA.Slot.EmployeeID).Color + ";" })
+                                    <a> </a>
+                                }
+                            }
+                            &ensp;
+                        </td>
+                    }
+                }
+            }
+        </tr>
+    }
+</table>
+
+<table>
+    <tr>
+        <th>
+            &ensp;&ensp;&ensp;&ensp;
+        </th>
+        <th>
+            Week sum
+            &ensp;
+        </th>
+        <th>
+            Weeks sum
+            &ensp;
+        </th>
+        <th>
+            Zero sum
+            &ensp;
+        </th>
+        <th>
+            Weeks Est.
+            &ensp;
+        </th>
+    </tr>
+
+    @foreach (var EmployeeWithWorkHourStats in Model.EmployeesWithWorkHourStats)
+    {
+        <tr style="color:#@EmployeeWithWorkHourStats.Color">
+            <td>
+                @Html.ActionLink(EmployeeWithWorkHourStats.EmployeeID, "Details", "Employees", new { EmployeeID = EmployeeWithWorkHourStats.EmployeeID })
+            </td>
+            <td>
+                @Math.Round(EmployeeWithWorkHourStats.WorkHourStats.WeekSum, 2)
+            </td>
+            <td>
+                @Math.Round(EmployeeWithWorkHourStats.WorkHourStats.WeeksSum, 2)
+            </td>
+            <td>
+                @Math.Round(EmployeeWithWorkHourStats.WorkHourStats.WeekExpected, 2)
+            </td>
+            <td>
+                @Math.Round(EmployeeWithWorkHourStats.WorkHourStats.WeeksExpected, 2)
+            </td>
+        </tr>
+    }
+</table>

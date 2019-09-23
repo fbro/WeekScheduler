@@ -1,0 +1,55 @@
+﻿@model WeekScheduler.ViewModels.CreateRangeOfWeeksViewModel
+
+@{
+    ViewData["Title"] = "CreateRangeOfWeeks";
+}
+
+<h2>Create range of weeks</h2>
+
+<h4>Range of weeks</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ProjectID)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ProjectID)
+            </dd>
+        </dl>
+        <form asp-action="CreateRangeOfWeeks">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ProjectID" />
+            <div class="form-group">
+                <label asp-for="WeekTemplateID" class="control-label"></label>
+                <input asp-for="WeekTemplateID" class="form-control" />
+                <span asp-validation-for="WeekTemplateID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FromWeekID" class="control-label"></label>
+                <input asp-for="FromWeekID" class="form-control" />
+                <span asp-validation-for="FromWeekID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToWeekID" class="control-label"></label>
+                <input asp-for="ToWeekID" class="form-control" />
+                <span asp-validation-for="ToWeekID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create range of weeks" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a href='javascript:history.go(-1)'>Return</a>
+</div>
+<div>
+    <a asp-action="Index">Back to list of weeks</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

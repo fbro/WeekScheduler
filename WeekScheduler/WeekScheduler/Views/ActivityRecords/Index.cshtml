@@ -1,0 +1,77 @@
+﻿@model WeekScheduler.ViewModels.IndexActivityRecordViewModel
+
+@{
+    ViewData["Title"] = "ActivityRecord Index";
+}
+
+<h2>ActivityRecord Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form asp-controller="ActivityRecords" asp-action="Index" method="get">
+    <p>
+        <input type="hidden" asp-for="@Model.SortLayout" />
+        <input type="text" value="@Model.FilterString" name="filterString" placeholder="Search">
+        <input type="submit" value="Filter" />
+        @if (Model.SortLayout != null && Model.SortLayout != "" || Model.FilterString != null && Model.FilterString != "")
+        {@Html.ActionLink("Reset Search", "Index");
+    }
+    </p>
+</form>
+
+<a asp-area="" asp-controller="Activities" asp-action="">Activities</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            @{
+                var sortLayoutEmployeeID = "EmployeeID_asc";
+                var sortLayoutActivityID = "ActivityID_asc";
+                var sortLayoutWeight = "Weight_asc";
+
+                if (Model.SortLayout != null)
+                {
+                    if (Model.SortLayout.Equals("EmployeeID_asc")) { sortLayoutEmployeeID = "Name_desc"; }
+                    else if (Model.SortLayout.Equals("ActivityID_asc")) { sortLayoutActivityID = "ActivityID_desc"; }
+                    else if (Model.SortLayout.Equals("Weight_asc")) { sortLayoutWeight = "Weight_desc"; }
+                }
+            }
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.ActivityRecordModels[0].EmployeeID), "Index", new { sortLayout = sortLayoutEmployeeID, filterString = Model.FilterString })
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.ActivityRecordModels[0].ActivityID), "Index", new { sortLayout = sortLayoutActivityID, filterString = Model.FilterString })
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.ActivityRecordModels[0].Weight), "Index", new { sortLayout = sortLayoutWeight, filterString = Model.FilterString })
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ActivityRecordModels)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActivityID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Weight)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { EmployeeID = item.EmployeeID, ActivityID = item.ActivityID }) |
+                    @Html.ActionLink("Details", "Details", new { EmployeeID = item.EmployeeID, ActivityID = item.ActivityID }) |
+                    @Html.ActionLink("Delete", "Delete", new { EmployeeID = item.EmployeeID, ActivityID = item.ActivityID })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a href='javascript:history.go(-1)'>Return</a>
+</div>

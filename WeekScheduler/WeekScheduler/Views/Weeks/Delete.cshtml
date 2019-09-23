@@ -1,0 +1,88 @@
+﻿@model WeekScheduler.Models.WeekModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Week</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProjectID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WeekID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WeekID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstDayOfTheWeek)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstDayOfTheWeek)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes1Monday)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes1Monday)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes2Tuesday)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes2Tuesday)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes3Wednesday)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes3Wednesday)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes4Thursday)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes4Thursday)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes5Friday)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes5Friday)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes6Saturday)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes6Saturday)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes7Sunday)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes7Sunday)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ProjectID" />
+        <input type="hidden" asp-for="WeekID" />
+        <input type="submit" value="Delete" class="btn btn-default" />
+    </form>
+
+    <div>
+        <a href='javascript:history.go(-1)'>Return</a>
+    </div>
+    <div>
+        <a asp-action="Index">Back to list of weeks</a>
+    </div>
+</div>

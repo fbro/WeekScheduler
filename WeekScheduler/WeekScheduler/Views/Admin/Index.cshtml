@@ -1,0 +1,97 @@
+﻿@model WeekScheduler.ViewModels.IndexAdminViewModel
+
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<h2>Admin Index</h2>
+<h4>Only for authorized admins!</h4>
+<h5>@Model.Message</h5>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Users.SingleOrDefault().UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users.SingleOrDefault().PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users.SingleOrDefault().Initials)
+            </th>
+            <th>
+                Roles
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Users)
+        {
+            <tr>
+                <td>
+                    @if (item.EmailConfirmed)
+                    {
+                        <span class="Status-Active">@Html.DisplayFor(modelItem => item.UserName)</span>
+                    }
+                    else
+                    {
+                        <span class="Status-Inactive">@Html.DisplayFor(modelItem => item.UserName)</span>
+                    }
+                </td>
+                <td>
+                    @if (item.PhoneNumberConfirmed)
+                    {
+                        <span class="Status-Active">@Html.DisplayFor(modelItem => item.PhoneNumber)</span>
+                    }
+                    else
+                    {
+                        <span class="Status-Inactive">@Html.DisplayFor(modelItem => item.PhoneNumber)</span>
+                    }
+                </td>
+                <td>
+                    <div>
+                        <form asp-action="SetUserInitials" method="post">
+                            <input asp-for="Users.Find(e => e.Id == item.Id).Initials" />
+                            <input type="hidden" asp-for=@item.Initials name="Initials" />
+                            <input type="hidden" asp-for=@item.Id name="UserId" />
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    @{var userRoles = Model.Roles.Where(d => Model.UserRoles.Where(e => e.UserId.Equals(item.Id)).Where(e => e.RoleId.Equals(d.Id)).Any()).Select(e => e.Name);}
+                    @foreach (var roleName in Model.Roles.Select(e => e.Name))
+                    {
+                        if (userRoles.Any(e => e.Equals(roleName))) // user has this role
+                        {
+                            @Html.ActionLink(roleName, "DeleteUserRole", "Admin", new { EmployeeID = item.Initials, RoleName = roleName }, new { @class = "Status-Active" })
+                            <span> </span>
+                        }
+                    }
+                    |
+                    @foreach (var roleName in Model.Roles.Select(e => e.Name))
+                    {
+                        if (!userRoles.Any(e => e.Equals(roleName))) // user do not have this role
+                        {
+                            @Html.ActionLink(roleName, "AddUserRole", "Admin", new { EmployeeID = item.Initials, RoleName = roleName }, new { @class = "Status-Inactive" })
+                            <span> </span>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<form asp-action="TestInitialize" method="post">
+    @{
+        bool isConfirmed = Model.IsDBResetConfirmed.HasValue ? Model.IsDBResetConfirmed.Value : false;
+        string btnDBResetClass = isConfirmed ? "btn-DBReset" : "";
+    }
+    <input type="hidden" asp-for=@isConfirmed name="isConfirmed" />
+    <input type="submit" value="Reset Database" class="btn btn-default @btnDBResetClass" />
+</form>
+
+<div>
+    <a href='javascript:history.go(-1)'>Return</a>
+</div>

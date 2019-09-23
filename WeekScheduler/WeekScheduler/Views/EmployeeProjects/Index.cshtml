@@ -1,0 +1,70 @@
+﻿@model WeekScheduler.ViewModels.IndexEmployeeProjectViewModel
+
+@{
+    ViewData["Title"] = "EmployeeProject Index";
+}
+
+<h2>EmployeeProject Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form asp-controller="EmployeeProjects" asp-action="Index" method="get">
+    <p>
+        <input type="hidden" asp-for="@Model.SortLayout" />
+        <input type="text" value="@Model.FilterString" name="filterString" placeholder="Search">
+        <input type="submit" value="Filter" />
+        @if (Model.SortLayout != null && Model.SortLayout != "" || Model.FilterString != null && Model.FilterString != "")
+        {@Html.ActionLink("Reset Search", "Index");
+    }
+    </p>
+</form>
+
+<a asp-area="" asp-controller="Employees" asp-action="">Employees</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            @{
+                var sortLayoutProjectID = "ProjectID_asc";
+                var sortLayoutEmployeeID = "EmployeeID_asc";
+
+                if (Model.SortLayout != null)
+                {
+                    if (Model.SortLayout.Equals("ProjectID_asc")) { sortLayoutProjectID = "ProjectID_desc"; }
+                    else if (Model.SortLayout.Equals("EmployeeID_asc")) { sortLayoutEmployeeID = "EmployeeID_desc"; }
+                }
+            }
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.EmployeeProjectModels[0].ProjectID), "Index", new { sortLayout = sortLayoutProjectID, filterString = Model.FilterString })
+
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.EmployeeProjectModels[0].EmployeeID), "Index", new { sortLayout = sortLayoutEmployeeID, filterString = Model.FilterString })
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.EmployeeProjectModels)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeID)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { ProjectID = item.ProjectID, EmployeeID = item.EmployeeID }) |
+                    @Html.ActionLink("Details", "Details", new { ProjectID = item.ProjectID, EmployeeID = item.EmployeeID }) |
+                    @Html.ActionLink("Delete", "Delete", new { ProjectID = item.ProjectID, EmployeeID = item.EmployeeID })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a href='javascript:history.go(-1)'>Return</a>
+</div>

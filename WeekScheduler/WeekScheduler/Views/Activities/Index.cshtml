@@ -1,0 +1,108 @@
+﻿@model WeekScheduler.ViewModels.IndexActivityViewModel
+
+@{
+    ViewData["Title"] = "Activity Index";
+}
+
+<h2>Activity Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form asp-controller="Activities" asp-action="Index" method="get">
+    <p>
+        <input type="hidden" asp-for="@Model.SortLayout" />
+        <input type="text" value="@Model.FilterString" name="filterString" placeholder="Search">
+        <input type="submit" value="Filter" />
+        @if (Model.SortLayout != null && Model.SortLayout != "" || Model.FilterString != null && Model.FilterString != "")
+        {@Html.ActionLink("Reset Search", "Index");}
+    </p>
+</form>
+
+<a asp-area="" asp-controller="ActivityRecords" asp-action="">ActivityRecords</a>
+<a asp-area="" asp-controller="Tags" asp-action="">Tags</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            @{
+                var sortLayoutActivityID = "ActivityID_asc";
+                var sortLayoutName = "Name_asc";
+                var sortLayoutDayOfWeek = "DayOfWeek_asc";
+                var sortTimeOfDay = "TimeOfDay_asc";
+                var sortHours = "Hours_asc";
+                var sortImportance = "Importance_asc";
+                var sortOwner = "Owner_asc";
+
+                if(Model.SortLayout != null)
+                {
+                    if (Model.SortLayout.Equals("ActivityID_asc")) { sortLayoutActivityID = "ActivityID_desc"; }
+                    else if (Model.SortLayout.Equals("Name_asc")) { sortLayoutName = "Name_desc"; }
+                    else if (Model.SortLayout.Equals("DayOfWeek_asc")) { sortLayoutDayOfWeek = "DayOfWeek_desc"; }
+                    else if (Model.SortLayout.Equals("TimeOfDay_asc")) { sortTimeOfDay = "TimeOfDay_desc"; }
+                    else if (Model.SortLayout.Equals("Hours_asc")) { sortHours = "Hours_desc"; }
+                    else if (Model.SortLayout.Equals("Importance_asc")) { sortImportance = "Importance_desc"; }
+                    else if (Model.SortLayout.Equals("Owner_asc")) { sortOwner = "Owner_desc"; }
+                }
+            }
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.ActivityModels[0].ActivityID), "Index", new { sortLayout = sortLayoutActivityID, filterString = Model.FilterString })
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.ActivityModels[0].Name), "Index", new { sortLayout = sortLayoutName, filterString = Model.FilterString })
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.ActivityModels[0].DayOfWeek), "Index", new { sortLayout = sortLayoutDayOfWeek, filterString = Model.FilterString })
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.ActivityModels[0].TimeOfDay), "Index", new { sortLayout = sortTimeOfDay, filterString = Model.FilterString })
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.ActivityModels[0].Hours), "Index", new { sortLayout = sortHours, filterString = Model.FilterString })
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.ActivityModels[0].Importance), "Index", new { sortLayout = sortImportance, filterString = Model.FilterString })
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.ActivityModels[0].Owner), "Index", new { sortLayout = sortOwner, filterString = Model.FilterString })
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ActivityModels) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActivityID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DayOfWeek)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeOfDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Importance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Owner)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-ActivityID="@item.ActivityID">Edit</a> |
+                <a asp-action="Details" asp-route-ActivityID="@item.ActivityID">Details</a> |
+                <a asp-action="Delete" asp-route-ActivityID="@item.ActivityID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div>
+    <a href='javascript:history.go(-1)'>Return</a>
+</div>
